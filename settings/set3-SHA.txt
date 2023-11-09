@@ -1,0 +1,109 @@
+{
+    # Args
+    'data_param': {'random_seed':0},
+    'model_name': 'MLPClassifier',
+    'param_grid': {
+        'hidden_layer_sizes': [(30,), (30,30),
+                               (40,), (40,40),
+                               (50,), (50,50),],
+        'activation': ['logistic', 'tanh', 'relu'],
+        'solver': ['lbfgs', 'sgd', 'adam'],
+        #'max_iter': [50, 100, 150, 200],
+        #'batch_size': [32, 64, 128],
+        'learning_rate_init': [0.001, 0.01, 0.1],
+    },
+    
+    # CVs
+    'searchers': {
+        
+        # random
+        'random (r0)':{
+            'search_method': 'random',
+            'search_param':  {'random_state':0},
+            'cv_method': 'random',
+            'cv_param': {'n_splits': 5, 'shuffle':True, 'random_state':0},
+        },
+
+        'random (r1)':{
+            'search_method': 'random',
+            'search_param':  {'random_state':0},
+            'cv_method': 'random',
+            'cv_param': {'n_splits': 5, 'shuffle':True, 'random_state':1},
+        },
+
+        'random (r2)':{
+            'search_method': 'random',
+            'search_param':  {'random_state':0},
+            'cv_method': 'random',
+            'cv_param': {'n_splits': 5, 'shuffle':True, 'random_state':2},
+        },
+
+
+
+        # SHA
+        'SHA (random, n5, r0)':{
+            'search_method': 'sv_grid',
+            'search_param':  {'random_state':0, 'resource':'n_samples', 'n_jobs':5},
+            'cv_method': 'random',
+            'cv_param': {'n_splits': 5, 'shuffle':True, 'random_state':0},
+        },
+
+        'SHA (random, n5, r1)':{
+            'search_method': 'sv_grid',
+            'search_param':  {'random_state':0, 'resource':'n_samples', 'n_jobs':5},
+            'cv_method': 'stratified',
+            'cv_param': {'n_splits': 5, 'shuffle':True, 'random_state':1},
+        },
+
+        'SHA (random, n5, r2)':{
+            'search_method': 'sv_grid',
+            'search_param':  {'random_state':0, 'resource':'n_samples', 'n_jobs':5},
+            'cv_method': 'stratified',
+            'cv_param': {'n_splits': 5, 'shuffle':True, 'random_state':2},
+        },
+
+
+        # SHA + 
+        
+        'SHA + (a0.1, g3, s2, b0.8, m0.8, r0)':{
+            'search_method': 'my_sv_grid',
+            'search_param':  {'random_state':0, 'resource':'n_samples', 'n_jobs':5, 'alpha':0.1},
+            'cv_method': 'new',
+            'cv_param': {'shuffle':True, 'random_state': 0,
+                         'n_general':3, 'n_special':2, 
+                         'block_ratio':0.8, 'main_ratio': 0.8,
+                         'cluster_type':'kmeans', 
+                         'cluster_param': {'n_init':10, 'random_state':0},
+            },
+        },
+
+        'SHA + (a0.1, g3, s2, b0.8, m0.8, r1)':{
+            'search_method': 'my_sv_grid',
+            'search_param':  {'random_state':0, 'resource':'n_samples', 'n_jobs':5, 'alpha':0.1},
+            'cv_method': 'new',
+            'cv_param': {'shuffle':True, 'random_state': 1,
+                         'n_general':3, 'n_special':2, 
+                         'block_ratio':0.8, 'main_ratio': 0.8,
+                         'cluster_type':'kmeans', 
+                         'cluster_param': {'n_init':10, 'random_state':1},
+            },
+        },
+    
+        'SHA + (a0.1, g3, s2, b0.8, m0.8, r2)':{
+            'search_method': 'my_sv_grid',
+            'search_param':  {'random_state':0, 'resource':'n_samples', 'n_jobs':5, 'alpha':0.1},
+            'cv_method': 'new',
+            'cv_param': {'shuffle':True, 'random_state': 2,
+                         'n_general':3, 'n_special':2, 
+                         'block_ratio':0.8, 'main_ratio': 0.8,
+                         'cluster_type':'kmeans', 
+                         'cluster_param': {'n_init':10, 'random_state':2},
+            },
+        },
+
+
+
+
+
+    },
+}

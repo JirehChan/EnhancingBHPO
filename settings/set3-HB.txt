@@ -1,0 +1,84 @@
+{
+    # Args
+    'data_param': {'random_seed':0},
+    'model_name': 'MLPClassifier',
+    'param_grid': {
+        'hidden_layer_sizes': [(30,), (30,30),
+                               (40,), (40,40),
+                               (50,), (50,50)],
+        'activation': ['logistic', 'tanh', 'relu'],
+        'solver': ['lbfgs', 'sgd', 'adam'],
+        #'max_iter': [50, 100, 150, 200],
+        #'batch_size': [32, 64, 128],
+        'learning_rate_init': [0.001, 0.01, 0.1],
+    },
+    
+    # CVs
+    'searchers': {
+
+        'HB (r0)':{
+            'search_method': 'hyperband',
+            'search_param':  {'random_state':0, 'verbose': 1, 'n_jobs':1, 'n_iter':12},
+
+            'cv_method': 'random',
+            'cv_param': {'shuffle':True, 'random_state': 0, 'n_splits':5},
+        },
+
+        'HB (r1)':{
+            'search_method': 'hyperband',
+            'search_param':  {'random_state':0, 'verbose': 1, 'n_jobs':1, 'n_iter':12},
+
+            'cv_method': 'random',
+            'cv_param': {'shuffle':True, 'random_state': 1, 'n_splits':5},
+        },
+
+        'HB (r2)':{
+            'search_method': 'hyperband',
+            'search_param':  {'random_state':0, 'verbose': 1, 'n_jobs':1, 'n_iter':12},
+
+            'cv_method': 'random',
+            'cv_param': {'shuffle':True, 'random_state': 2, 'n_splits':5},
+        },
+
+
+       'HB+ (a0.1, g3, s2, b0.8, m0.8, r0)':{
+            'search_method': 'my_hyperband',
+            'search_param':  {'random_state':0, 'verbose': 1, 'n_jobs':1, 'n_iter':12, 'alpha':0.1},
+
+            'cv_method': 'new',
+            'cv_param': {'shuffle':True, 'random_state': 0,
+                         'n_general':3, 'n_special':2, 
+                         'block_ratio':0.8, 'main_ratio': 0.8,
+                         'cluster_type':'kmeans', 
+                         'cluster_param': {'n_init':10, 'random_state':0},
+            },
+        },
+
+        'HB+ (a0.1, g3, s2, b0.8, m0.8, r1)':{
+            'search_method': 'my_hyperband',
+            'search_param':  {'random_state':0, 'verbose': 1, 'n_jobs':1, 'n_iter':12, 'alpha':0.1},
+
+            'cv_method': 'new',
+            'cv_param': {'shuffle':True, 'random_state': 1,
+                         'n_general':3, 'n_special':2, 
+                         'block_ratio':0.8, 'main_ratio': 0.8,
+                         'cluster_type':'kmeans', 
+                         'cluster_param': {'n_init':10, 'random_state':0},
+            },
+        },
+
+        'HB+ (a0.1, g3, s2, b0.8, m0.8, r2)':{
+            'search_method': 'my_hyperband',
+            'search_param':  {'random_state':0, 'verbose': 1, 'n_jobs':1, 'n_iter':12, 'alpha':0.1},
+
+            'cv_method': 'new',
+            'cv_param': {'shuffle':True, 'random_state': 2,
+                         'n_general':3, 'n_special':2, 
+                         'block_ratio':0.8, 'main_ratio': 0.8,
+                         'cluster_type':'kmeans', 
+                         'cluster_param': {'n_init':10, 'random_state':0},
+            },
+        
+        },
+    }
+}
